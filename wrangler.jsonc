@@ -11,7 +11,8 @@
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "MSA_PROPERTY_DB"
+      "database_name": "msa_property_db",
+      "database_id": "51308122-39f8-4a8c-a43c-c8dfc5d8684c"
     }
   ]
 }
