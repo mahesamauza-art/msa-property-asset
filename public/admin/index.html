@@ -18,6 +18,7 @@
   --muted:#667085;
   --line:#e6eaf0;
   --red:#b42318;
+  --green:#067647;
 }
 
 *{
@@ -205,11 +206,23 @@ textarea{
 }
 
 .ok{
-  color:#067647;
+  color:var(--green);
   font-size:13px
 }
 
+.api-box{
+  margin-top:12px;
+  padding:12px;
+  border-radius:10px;
+  background:#f5f7fa;
+  border:1px solid var(--line);
+  font-size:13px;
+  line-height:1.5;
+  word-break:break-word
+}
+
 @media(max-width:760px){
+
   .grid,
   .stats{
     grid-template-columns:1fr
@@ -222,23 +235,33 @@ textarea{
   .actions{
     margin-top:10px
   }
+
 }
 </style>
 </head>
 
 <body>
 
+<!-- =========================
+     LOGIN ADMIN
+========================= -->
+
 <div id="login" class="login">
 
   <div class="loginbox">
 
     <div class="logo">
+
       <div>
+
         <b>MSA PROPERTY & ASSET</b>
+
         <div class="muted" style="font-size:11px">
           ADMINISTRATION
         </div>
+
       </div>
+
     </div>
 
     <h1>Selamat datang</h1>
@@ -248,35 +271,79 @@ textarea{
     </p>
 
     <label>Username</label>
-    <input id="user">
+
+    <input
+      id="user"
+      autocomplete="username"
+      placeholder="Username">
 
     <label>Password</label>
-    <input id="pass" type="password">
+
+    <input
+      id="pass"
+      type="password"
+      autocomplete="current-password"
+      placeholder="Password">
 
     <button
       class="btn gold"
       style="width:100%;margin-top:14px"
       onclick="login()">
+
       Masuk Admin
+
     </button>
 
     <p id="err" class="error"></p>
 
+
+    <!-- CEK API -->
+
+    <button
+      class="btn"
+      style="width:100%;margin-top:8px"
+      onclick="checkAPI()">
+
+      🔧 Cek Koneksi API
+
+    </button>
+
+    <div
+      id="apiStatus"
+      class="api-box"
+      style="display:none">
+
+    </div>
+
   </div>
+
 </div>
 
+
+<!-- =========================
+     ADMIN APP
+========================= -->
 
 <div id="app" class="app">
 
   <div class="top">
 
     <div>
+
       <b>MSA ADMIN</b>
-      <small>Property & Asset Management</small>
+
+      <small>
+        Property & Asset Management
+      </small>
+
     </div>
 
-    <button class="btn" onclick="logout()">
+    <button
+      class="btn"
+      onclick="logout()">
+
       Keluar
+
     </button>
 
   </div>
@@ -298,18 +365,41 @@ textarea{
     <div class="stats">
 
       <div class="stat">
-        <span class="muted">Total aset</span>
-        <strong id="count">0</strong>
+
+        <span class="muted">
+          Total aset
+        </span>
+
+        <strong id="count">
+          0
+        </strong>
+
       </div>
 
-      <div class="stat">
-        <span class="muted">Aktif</span>
-        <strong id="active">0</strong>
-      </div>
 
       <div class="stat">
-        <span class="muted">SOLD</span>
-        <strong id="sold">0</strong>
+
+        <span class="muted">
+          Aktif
+        </span>
+
+        <strong id="active">
+          0
+        </strong>
+
+      </div>
+
+
+      <div class="stat">
+
+        <span class="muted">
+          SOLD
+        </span>
+
+        <strong id="sold">
+          0
+        </strong>
+
       </div>
 
     </div>
@@ -317,105 +407,221 @@ textarea{
 
     <div class="grid">
 
+
+      <!-- TAMBAH ASET -->
+
       <section class="panel">
 
-        <h3>Tambah Aset</h3>
+        <h3>
+          Tambah Aset
+        </h3>
 
-        <label>Nama aset</label>
-        <input id="name" placeholder="Kebun Sawit 10 Ha">
 
-        <label>Lokasi</label>
-        <input id="loc" placeholder="Bayung Lencir">
+        <label>
+          Nama aset
+        </label>
 
-        <label>Harga</label>
-        <input id="price" type="number" placeholder="750000000">
+        <input
+          id="name"
+          placeholder="Kebun Sawit 10 Ha">
 
-        <label>Luas</label>
-        <input id="area" placeholder="10 Ha">
 
-        <label>Kategori</label>
-        <input id="cat" placeholder="Kebun / Tanah / Rumah / Ruko">
+        <label>
+          Lokasi
+        </label>
 
-        <label>Tanaman</label>
-        <input id="plant" placeholder="Kelapa sawit">
+        <input
+          id="loc"
+          placeholder="Bayung Lencir">
 
-        <label>Tahun tanam</label>
-        <input id="year" placeholder="2012">
 
-        <label>Status dokumen</label>
-        <input id="land" placeholder="SHM / HGU / perlu verifikasi">
+        <label>
+          Harga
+        </label>
 
-        <label>Kelengkapan</label>
-        <input id="complete" placeholder="Data dasar tersedia">
+        <input
+          id="price"
+          type="number"
+          placeholder="750000000">
 
-        <label>Kekurangan / minus</label>
-        <input id="minus" placeholder="Perlu verifikasi lapangan">
 
-        <label>Bisa nego</label>
+        <label>
+          Luas
+        </label>
+
+        <input
+          id="area"
+          placeholder="10 Ha">
+
+
+        <label>
+          Kategori
+        </label>
+
+        <input
+          id="cat"
+          placeholder="Kebun / Tanah / Rumah / Ruko">
+
+
+        <label>
+          Tanaman
+        </label>
+
+        <input
+          id="plant"
+          placeholder="Kelapa sawit">
+
+
+        <label>
+          Tahun tanam
+        </label>
+
+        <input
+          id="year"
+          placeholder="2012">
+
+
+        <label>
+          Status dokumen
+        </label>
+
+        <input
+          id="land"
+          placeholder="SHM / HGU / perlu verifikasi">
+
+
+        <label>
+          Kelengkapan
+        </label>
+
+        <input
+          id="complete"
+          placeholder="Data dasar tersedia">
+
+
+        <label>
+          Kekurangan / minus
+        </label>
+
+        <input
+          id="minus"
+          placeholder="Perlu verifikasi lapangan">
+
+
+        <label>
+          Bisa nego
+        </label>
 
         <select id="nego">
-          <option value="1">Ya</option>
-          <option value="0">Tidak</option>
+
+          <option value="1">
+            Ya
+          </option>
+
+          <option value="0">
+            Tidak
+          </option>
+
         </select>
 
-        <label>URL foto (sementara)</label>
-        <input id="image" placeholder="https://...">
 
-        <label>Status</label>
+        <label>
+          URL foto sementara
+        </label>
+
+        <input
+          id="image"
+          placeholder="https://...">
+
+
+        <label>
+          Status
+        </label>
 
         <select id="status">
-          <option>Aktif</option>
-          <option>SOLD</option>
+
+          <option>
+            Aktif
+          </option>
+
+          <option>
+            SOLD
+          </option>
+
         </select>
 
-        <label>Deskripsi</label>
+
+        <label>
+          Deskripsi
+        </label>
 
         <textarea
           id="desc"
-          placeholder="Informasi singkat aset">
-        </textarea>
+          placeholder="Informasi singkat aset"></textarea>
+
 
         <button
           class="btn gold"
           onclick="add()">
+
           Simpan Aset
+
         </button>
 
-        <p id="msg" class="ok"></p>
+        <p
+          id="msg"
+          class="ok"></p>
 
       </section>
 
 
+      <!-- WHATSAPP TIM -->
+
       <section class="panel">
 
-        <h3>WhatsApp Tim MSA</h3>
+        <h3>
+          WhatsApp Tim MSA
+        </h3>
 
         <p class="muted">
           Nomor tujuan tombol “Saya Tertarik”.
         </p>
 
-        <label>Nama anggota tim</label>
+
+        <label>
+          Nama anggota tim
+        </label>
 
         <input
           id="waname"
           placeholder="Nama">
 
-        <label>Nomor WhatsApp</label>
+
+        <label>
+          Nomor WhatsApp
+        </label>
 
         <input
           id="wa"
           placeholder="628xxxxxxxxxx">
 
+
         <button
           class="btn gold"
           onclick="saveWA()">
+
           Simpan Nomor
+
         </button>
 
-        <p id="wview" class="muted"></p>
+        <p
+          id="wview"
+          class="muted"></p>
+
 
         <hr
           style="border:0;border-top:1px solid var(--line);margin:22px 0">
+
 
         <p
           class="muted"
@@ -431,15 +637,20 @@ textarea{
     </div>
 
 
+    <!-- DAFTAR ASET -->
+
     <section class="panel">
 
-      <h3>Daftar Aset</h3>
+      <h3>
+        Daftar Aset
+      </h3>
 
       <div id="list"></div>
 
     </section>
 
   </div>
+
 </div>
 
 
@@ -448,24 +659,144 @@ textarea{
 let assets=[];
 
 
+/* =========================
+   API HELPER
+========================= */
+
 async function api(path,opts={}){
 
-  let r=await fetch(path,{
-    ...opts,
-    headers:{
-      'content-type':'application/json',
-      ...(opts.headers||{})
-    }
-  });
+  let r;
 
-  let d=await r.json().catch(()=>({}));
+  try{
 
-  if(!r.ok)
-    throw new Error(d.error||'Request gagal');
+    r=await fetch(path,{
+      ...opts,
+      headers:{
+        'content-type':'application/json',
+        ...(opts.headers||{})
+      }
+    });
+
+  }catch(e){
+
+    throw new Error(
+      'Tidak dapat terhubung ke server.'
+    );
+
+  }
+
+
+  let d=await r.json().catch(()=>({
+
+    error:'Server tidak mengembalikan JSON.'
+
+  }));
+
+
+  if(!r.ok){
+
+    throw new Error(
+      d.error ||
+      `HTTP ${r.status}`
+    );
+
+  }
+
 
   return d;
+
 }
 
+
+/* =========================
+   CEK API
+========================= */
+
+async function checkAPI(){
+
+  const box=
+    document.getElementById('apiStatus');
+
+
+  box.style.display='block';
+
+  box.textContent=
+    '⏳ Memeriksa koneksi API...';
+
+
+  try{
+
+    const r=
+      await fetch('/api/health',{
+        method:'GET',
+        cache:'no-store'
+      });
+
+
+    const text=
+      await r.text();
+
+
+    if(!r.ok){
+
+      box.innerHTML=
+        '❌ API error.<br>'+
+        'HTTP Status: '+
+        r.status+
+        '<br><br>'+
+        escapeHTML(text);
+
+      return;
+
+    }
+
+
+    let data;
+
+    try{
+
+      data=JSON.parse(text);
+
+    }catch(e){
+
+      box.innerHTML=
+        '⚠️ Server merespons, tetapi bukan JSON.<br><br>'+
+        escapeHTML(text);
+
+      return;
+
+    }
+
+
+    if(data.ok){
+
+      box.innerHTML=
+        '✅ <b>API TERHUBUNG</b><br>'+
+        'Service: '+
+        escapeHTML(data.service || '-');
+
+    }else{
+
+      box.innerHTML=
+        '⚠️ API merespons tetapi status tidak OK.<br><br>'+
+        escapeHTML(text);
+
+    }
+
+  }catch(e){
+
+    box.innerHTML=
+      '❌ <b>API TIDAK TERHUBUNG</b><br>'+
+      escapeHTML(e.message);
+
+  }
+
+}
+
+
+/* =========================
+   LOGIN
+========================= */
 
 async function login(){
 
@@ -475,11 +806,17 @@ async function login(){
 
     await api('/api/login',{
       method:'POST',
+
       body:JSON.stringify({
-        username:user.value,
+
+        username:user.value.trim(),
+
         password:pass.value
+
       })
+
     });
+
 
     loginBoxHide();
 
@@ -490,30 +827,41 @@ async function login(){
     err.textContent=e.message;
 
   }
+
 }
 
 
 function loginBoxHide(){
 
-  document.getElementById('login').style.display='none';
+  document.getElementById('login')
+    .style.display='none';
 
-  document.getElementById('app').style.display='block';
+  document.getElementById('app')
+    .style.display='block';
 
 }
 
 
+/* =========================
+   TAMBAH ASET
+========================= */
+
 async function add(){
 
-  if(!name.value||!loc.value){
+  if(!name.value || !loc.value){
 
-    msg.textContent='Nama aset dan lokasi wajib diisi.';
+    msg.textContent=
+      'Nama aset dan lokasi wajib diisi.';
 
     return;
+
   }
+
 
   try{
 
     await api('/api/assets',{
+
       method:'POST',
 
       body:JSON.stringify({
@@ -547,10 +895,12 @@ async function add(){
         image_url:image.value
 
       })
+
     });
 
 
     [
+
       name,
       loc,
       price,
@@ -567,35 +917,52 @@ async function add(){
     ].forEach(x=>x.value='');
 
 
-    msg.textContent='Aset tersimpan di database.';
+    msg.textContent=
+      'Aset tersimpan di database.';
+
 
     await render();
 
   }catch(e){
 
-    msg.textContent=e.message;
+    msg.textContent=
+      e.message;
 
   }
+
 }
 
+
+/* =========================
+   LOAD ASSETS
+========================= */
 
 async function loadAssets(){
 
-  assets=await api('/api/assets');
+  assets=
+    await api('/api/assets');
 
 }
 
+
+/* =========================
+   HAPUS ASET
+========================= */
 
 async function removeAsset(id){
 
   if(!confirm('Hapus aset ini?'))
     return;
 
+
   try{
 
     await api('/api/assets/'+id,{
+
       method:'DELETE'
+
     });
+
 
     await render();
 
@@ -604,22 +971,33 @@ async function removeAsset(id){
     alert(e.message);
 
   }
+
 }
 
+
+/* =========================
+   SOLD / AKTIF
+========================= */
 
 async function sold(id,status){
 
   try{
 
     await api('/api/assets/'+id,{
+
       method:'PATCH',
 
       body:JSON.stringify({
-        status:status==='SOLD'
-          ?'Aktif'
-          :'SOLD'
+
+        status:
+          status==='SOLD'
+            ?'Aktif'
+            :'SOLD'
+
       })
+
     });
+
 
     await render();
 
@@ -628,95 +1006,164 @@ async function sold(id,status){
     alert(e.message);
 
   }
+
 }
 
 
+/* =========================
+   SIMPAN WHATSAPP
+========================= */
+
 async function saveWA(){
 
-  if(!waname.value||!wa.value){
+  if(!waname.value || !wa.value){
 
-    wview.textContent='Nama dan nomor wajib diisi.';
+    wview.textContent=
+      'Nama dan nomor wajib diisi.';
 
     return;
+
   }
+
 
   try{
 
     await api('/api/team',{
+
       method:'POST',
 
       body:JSON.stringify({
+
         name:waname.value,
+
         phone:wa.value
+
       })
+
     });
 
+
     waname.value='';
+
     wa.value='';
+
 
     await renderTeam();
 
   }catch(e){
 
-    wview.textContent=e.message;
+    wview.textContent=
+      e.message;
 
   }
+
 }
 
+
+/* =========================
+   AKTIF / NONAKTIF TIM
+========================= */
 
 async function toggleTeam(id,active){
 
-  await api('/api/team/'+id,{
-    method:'PATCH',
-
-    body:JSON.stringify({
-      active
-    })
-  });
-
-  await renderTeam();
-
-}
-
-
-async function deleteTeam(id){
-
-  if(confirm('Hapus nomor tim ini?')){
+  try{
 
     await api('/api/team/'+id,{
-      method:'DELETE'
+
+      method:'PATCH',
+
+      body:JSON.stringify({
+
+        active
+
+      })
+
     });
 
+
     await renderTeam();
+
+  }catch(e){
+
+    alert(e.message);
 
   }
 
 }
 
+
+/* =========================
+   HAPUS TIM
+========================= */
+
+async function deleteTeam(id){
+
+  if(
+    confirm(
+      'Hapus nomor tim ini?'
+    )
+  ){
+
+    try{
+
+      await api('/api/team/'+id,{
+
+        method:'DELETE'
+
+      });
+
+
+      await renderTeam();
+
+    }catch(e){
+
+      alert(e.message);
+
+    }
+
+  }
+
+}
+
+
+/* =========================
+   RENDER TEAM
+========================= */
 
 async function renderTeam(){
 
   try{
 
-    let t=await api('/api/team');
+    let t=
+      await api('/api/team');
 
-    wview.innerHTML=t.length
 
-      ?t.map(x=>`
+    wview.innerHTML=
+
+      t.length
+
+      ? t.map(x=>`
 
         <div class="asset">
 
           <div>
 
-            <b>${esc(x.name)}</b>
+            <b>
+              ${esc(x.name)}
+            </b>
 
             <div class="muted">
+
               ${esc(x.phone)}
               •
-              ${x.active?'Aktif':'Nonaktif'}
+              ${x.active
+                ?'Aktif'
+                :'Nonaktif'}
+
             </div>
 
           </div>
+
 
           <div class="actions">
 
@@ -727,13 +1174,20 @@ async function renderTeam(){
                 ${x.active?0:1}
               )">
 
-              ${x.active?'Nonaktifkan':'Aktifkan'}
+              ${
+                x.active
+                  ?'Nonaktifkan'
+                  :'Aktifkan'
+              }
 
             </button>
 
+
             <button
               class="btn danger"
-              onclick="deleteTeam('${x.id}')">
+              onclick="
+                deleteTeam('${x.id}')
+              ">
 
               Hapus
 
@@ -745,16 +1199,24 @@ async function renderTeam(){
 
       `).join('')
 
-      :'<span class="muted">Belum ada nomor tim.</span>';
+      :
+
+      '<span class="muted">Belum ada nomor tim.</span>';
+
 
   }catch(e){
 
-    wview.textContent=e.message;
+    wview.textContent=
+      e.message;
 
   }
 
 }
 
+
+/* =========================
+   RENDER DASHBOARD
+========================= */
 
 async function render(){
 
@@ -762,24 +1224,36 @@ async function render(){
 
     await loadAssets();
 
-    count.textContent=assets.length;
+
+    count.textContent=
+      assets.length;
+
 
     active.textContent=
-      assets.filter(x=>x.status==='Aktif').length;
+      assets.filter(
+        x=>x.status==='Aktif'
+      ).length;
+
 
     sold.textContent=
-      assets.filter(x=>x.status==='SOLD').length;
+      assets.filter(
+        x=>x.status==='SOLD'
+      ).length;
 
 
-    list.innerHTML=assets.length
+    list.innerHTML=
 
-      ?assets.map(x=>`
+      assets.length
+
+      ? assets.map(x=>`
 
         <div class="asset">
 
           <div>
 
-            <b>${esc(x.name)}</b>
+            <b>
+              ${esc(x.name)}
+            </b>
 
             <div class="muted">
 
@@ -787,7 +1261,9 @@ async function render(){
               •
               ${esc(x.area||'-')}
               •
-              Rp${(+x.price||0).toLocaleString('id-ID')}
+              Rp${(
+                +x.price||0
+              ).toLocaleString('id-ID')}
               •
               ${x.status}
 
@@ -795,24 +1271,32 @@ async function render(){
 
           </div>
 
+
           <div class="actions">
 
             <button
               class="btn"
-              onclick="sold(
-                '${x.id}',
-                '${x.status}'
-              )">
+              onclick="
+                sold(
+                  '${x.id}',
+                  '${x.status}'
+                )
+              ">
 
-              ${x.status==='SOLD'
-                ?'Aktifkan'
-                :'Tandai SOLD'}
+              ${
+                x.status==='SOLD'
+                  ?'Aktifkan'
+                  :'Tandai SOLD'
+              }
 
             </button>
 
+
             <button
               class="btn danger"
-              onclick="removeAsset('${x.id}')">
+              onclick="
+                removeAsset('${x.id}')
+              ">
 
               Hapus
 
@@ -824,18 +1308,26 @@ async function render(){
 
       `).join('')
 
-      :'<p class="muted">Belum ada aset.</p>';
+      :
+
+      '<p class="muted">Belum ada aset.</p>';
 
 
     await renderTeam();
 
+
   }catch(e){
 
-    if(String(e.message).includes('Unauthorized')){
+    if(
+      String(e.message)
+        .includes('Unauthorized')
+    ){
 
-      document.getElementById('app').style.display='none';
+      document.getElementById('app')
+        .style.display='none';
 
-      document.getElementById('login').style.display='grid';
+      document.getElementById('login')
+        .style.display='grid';
 
     }else{
 
@@ -848,27 +1340,61 @@ async function render(){
 }
 
 
+/* =========================
+   ESCAPE HTML
+========================= */
+
 function esc(v){
 
-  return String(v??'').replace(
-    /[&<>"']/g,
-    m=>({
-      '&':'&amp;',
-      '<':'&lt;',
-      '>':'&gt;',
-      '"':'&quot;',
-      "'":'&#39;'
-    }[m])
-  );
+  return String(v??'')
+    .replace(
+      /[&<>"']/g,
+      m=>({
+
+        '&':'&amp;',
+        '<':'&lt;',
+        '>':'&gt;',
+        '"':'&quot;',
+        "'":'&#39;'
+
+      }[m])
+    );
 
 }
 
 
+function escapeHTML(v){
+
+  return String(v??'')
+    .replace(
+      /[&<>"']/g,
+      m=>({
+
+        '&':'&amp;',
+        '<':'&lt;',
+        '>':'&gt;',
+        '"':'&quot;',
+        "'":'&#39;'
+
+      }[m])
+    );
+
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+
 async function logout(){
 
-  await fetch('/api/logout',{
-    method:'POST'
-  });
+  try{
+
+    await fetch('/api/logout',{
+      method:'POST'
+    });
+
+  }catch(e){}
 
   location.reload();
 
