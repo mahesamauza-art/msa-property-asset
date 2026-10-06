@@ -1,0 +1,880 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+
+<title>MSA Admin</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap');
+
+:root{
+  --navy:#071a2f;
+  --gold:#c9a45c;
+  --bg:#f5f7fa;
+  --white:#fff;
+  --ink:#17202a;
+  --muted:#667085;
+  --line:#e6eaf0;
+  --red:#b42318;
+}
+
+*{
+  box-sizing:border-box
+}
+
+body{
+  margin:0;
+  background:var(--bg);
+  font-family:"DM Sans",Arial;
+  color:var(--ink)
+}
+
+button,input,textarea,select{
+  font:inherit
+}
+
+.login{
+  min-height:100vh;
+  display:grid;
+  place-items:center;
+  padding:20px;
+  background:linear-gradient(135deg,#071a2f,#0d2948)
+}
+
+.loginbox{
+  width:min(430px,100%);
+  background:#fff;
+  border-radius:22px;
+  padding:32px;
+  box-shadow:0 25px 70px #0004
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:10px
+}
+
+.logo b{
+  letter-spacing:.08em
+}
+
+.login h1{
+  font-family:"Playfair Display";
+  font-size:30px
+}
+
+.muted{
+  color:var(--muted)
+}
+
+label{
+  display:block;
+  font-size:13px;
+  font-weight:700;
+  margin:14px 0 6px
+}
+
+input,textarea,select{
+  width:100%;
+  padding:12px;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:#fff
+}
+
+textarea{
+  min-height:90px;
+  resize:vertical
+}
+
+.btn{
+  border:0;
+  border-radius:10px;
+  padding:12px 16px;
+  background:var(--navy);
+  color:#fff;
+  font-weight:700;
+  cursor:pointer
+}
+
+.gold{
+  background:linear-gradient(135deg,#c9a45c,#e2c17d);
+  color:#071a2f
+}
+
+.danger{
+  background:var(--red)
+}
+
+.app{
+  display:none
+}
+
+.top{
+  background:var(--navy);
+  color:#fff;
+  padding:15px 5%;
+  display:flex;
+  justify-content:space-between;
+  align-items:center
+}
+
+.top small{
+  display:block;
+  color:#afbdcc
+}
+
+.wrap{
+  max-width:1180px;
+  margin:auto;
+  padding:28px 20px
+}
+
+.welcome{
+  margin-bottom:20px
+}
+
+.welcome h1{
+  font-family:"Playfair Display";
+  font-size:34px;
+  margin:0 0 5px
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  margin-bottom:18px
+}
+
+.stat{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:15px;
+  padding:17px
+}
+
+.stat strong{
+  font-size:26px;
+  display:block;
+  margin-top:5px
+}
+
+.grid{
+  display:grid;
+  grid-template-columns:1.15fr .85fr;
+  gap:18px
+}
+
+.panel{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:17px;
+  padding:21px;
+  margin-bottom:18px
+}
+
+.panel h2,
+.panel h3{
+  margin-top:0
+}
+
+.asset{
+  padding:15px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  margin-top:10px;
+  display:flex;
+  justify-content:space-between;
+  gap:12px
+}
+
+.actions{
+  display:flex;
+  gap:7px;
+  align-items:center;
+  flex-wrap:wrap
+}
+
+.error{
+  color:var(--red);
+  font-size:13px
+}
+
+.ok{
+  color:#067647;
+  font-size:13px
+}
+
+@media(max-width:760px){
+  .grid,
+  .stats{
+    grid-template-columns:1fr
+  }
+
+  .asset{
+    display:block
+  }
+
+  .actions{
+    margin-top:10px
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div id="login" class="login">
+
+  <div class="loginbox">
+
+    <div class="logo">
+      <div>
+        <b>MSA PROPERTY & ASSET</b>
+        <div class="muted" style="font-size:11px">
+          ADMINISTRATION
+        </div>
+      </div>
+    </div>
+
+    <h1>Selamat datang</h1>
+
+    <p class="muted">
+      Kelola aset dan WhatsApp tim MSA.
+    </p>
+
+    <label>Username</label>
+    <input id="user">
+
+    <label>Password</label>
+    <input id="pass" type="password">
+
+    <button
+      class="btn gold"
+      style="width:100%;margin-top:14px"
+      onclick="login()">
+      Masuk Admin
+    </button>
+
+    <p id="err" class="error"></p>
+
+  </div>
+</div>
+
+
+<div id="app" class="app">
+
+  <div class="top">
+
+    <div>
+      <b>MSA ADMIN</b>
+      <small>Property & Asset Management</small>
+    </div>
+
+    <button class="btn" onclick="logout()">
+      Keluar
+    </button>
+
+  </div>
+
+
+  <div class="wrap">
+
+    <div class="welcome">
+
+      <h1>Dashboard</h1>
+
+      <div class="muted">
+        Kelola informasi yang tampil di website MSA.
+      </div>
+
+    </div>
+
+
+    <div class="stats">
+
+      <div class="stat">
+        <span class="muted">Total aset</span>
+        <strong id="count">0</strong>
+      </div>
+
+      <div class="stat">
+        <span class="muted">Aktif</span>
+        <strong id="active">0</strong>
+      </div>
+
+      <div class="stat">
+        <span class="muted">SOLD</span>
+        <strong id="sold">0</strong>
+      </div>
+
+    </div>
+
+
+    <div class="grid">
+
+      <section class="panel">
+
+        <h3>Tambah Aset</h3>
+
+        <label>Nama aset</label>
+        <input id="name" placeholder="Kebun Sawit 10 Ha">
+
+        <label>Lokasi</label>
+        <input id="loc" placeholder="Bayung Lencir">
+
+        <label>Harga</label>
+        <input id="price" type="number" placeholder="750000000">
+
+        <label>Luas</label>
+        <input id="area" placeholder="10 Ha">
+
+        <label>Kategori</label>
+        <input id="cat" placeholder="Kebun / Tanah / Rumah / Ruko">
+
+        <label>Tanaman</label>
+        <input id="plant" placeholder="Kelapa sawit">
+
+        <label>Tahun tanam</label>
+        <input id="year" placeholder="2012">
+
+        <label>Status dokumen</label>
+        <input id="land" placeholder="SHM / HGU / perlu verifikasi">
+
+        <label>Kelengkapan</label>
+        <input id="complete" placeholder="Data dasar tersedia">
+
+        <label>Kekurangan / minus</label>
+        <input id="minus" placeholder="Perlu verifikasi lapangan">
+
+        <label>Bisa nego</label>
+
+        <select id="nego">
+          <option value="1">Ya</option>
+          <option value="0">Tidak</option>
+        </select>
+
+        <label>URL foto (sementara)</label>
+        <input id="image" placeholder="https://...">
+
+        <label>Status</label>
+
+        <select id="status">
+          <option>Aktif</option>
+          <option>SOLD</option>
+        </select>
+
+        <label>Deskripsi</label>
+
+        <textarea
+          id="desc"
+          placeholder="Informasi singkat aset">
+        </textarea>
+
+        <button
+          class="btn gold"
+          onclick="add()">
+          Simpan Aset
+        </button>
+
+        <p id="msg" class="ok"></p>
+
+      </section>
+
+
+      <section class="panel">
+
+        <h3>WhatsApp Tim MSA</h3>
+
+        <p class="muted">
+          Nomor tujuan tombol “Saya Tertarik”.
+        </p>
+
+        <label>Nama anggota tim</label>
+
+        <input
+          id="waname"
+          placeholder="Nama">
+
+        <label>Nomor WhatsApp</label>
+
+        <input
+          id="wa"
+          placeholder="628xxxxxxxxxx">
+
+        <button
+          class="btn gold"
+          onclick="saveWA()">
+          Simpan Nomor
+        </button>
+
+        <p id="wview" class="muted"></p>
+
+        <hr
+          style="border:0;border-top:1px solid var(--line);margin:22px 0">
+
+        <p
+          class="muted"
+          style="font-size:13px">
+
+          Data aset dan tim tersimpan di Cloudflare D1.
+          Foto file akan disambungkan ke R2 pada tahap berikutnya.
+
+        </p>
+
+      </section>
+
+    </div>
+
+
+    <section class="panel">
+
+      <h3>Daftar Aset</h3>
+
+      <div id="list"></div>
+
+    </section>
+
+  </div>
+</div>
+
+
+<script>
+
+let assets=[];
+
+
+async function api(path,opts={}){
+
+  let r=await fetch(path,{
+    ...opts,
+    headers:{
+      'content-type':'application/json',
+      ...(opts.headers||{})
+    }
+  });
+
+  let d=await r.json().catch(()=>({}));
+
+  if(!r.ok)
+    throw new Error(d.error||'Request gagal');
+
+  return d;
+}
+
+
+async function login(){
+
+  err.textContent='';
+
+  try{
+
+    await api('/api/login',{
+      method:'POST',
+      body:JSON.stringify({
+        username:user.value,
+        password:pass.value
+      })
+    });
+
+    loginBoxHide();
+
+    await render();
+
+  }catch(e){
+
+    err.textContent=e.message;
+
+  }
+}
+
+
+function loginBoxHide(){
+
+  document.getElementById('login').style.display='none';
+
+  document.getElementById('app').style.display='block';
+
+}
+
+
+async function add(){
+
+  if(!name.value||!loc.value){
+
+    msg.textContent='Nama aset dan lokasi wajib diisi.';
+
+    return;
+  }
+
+  try{
+
+    await api('/api/assets',{
+      method:'POST',
+
+      body:JSON.stringify({
+
+        name:name.value,
+
+        location:loc.value,
+
+        price:+price.value||0,
+
+        area:area.value,
+
+        category:cat.value,
+
+        status:status.value,
+
+        description:desc.value,
+
+        plant:plant.value,
+
+        year:year.value,
+
+        land:land.value,
+
+        complete:complete.value,
+
+        minus:minus.value,
+
+        nego:nego.value==='1',
+
+        image_url:image.value
+
+      })
+    });
+
+
+    [
+      name,
+      loc,
+      price,
+      area,
+      cat,
+      desc,
+      plant,
+      year,
+      land,
+      complete,
+      minus,
+      image
+
+    ].forEach(x=>x.value='');
+
+
+    msg.textContent='Aset tersimpan di database.';
+
+    await render();
+
+  }catch(e){
+
+    msg.textContent=e.message;
+
+  }
+}
+
+
+async function loadAssets(){
+
+  assets=await api('/api/assets');
+
+}
+
+
+async function removeAsset(id){
+
+  if(!confirm('Hapus aset ini?'))
+    return;
+
+  try{
+
+    await api('/api/assets/'+id,{
+      method:'DELETE'
+    });
+
+    await render();
+
+  }catch(e){
+
+    alert(e.message);
+
+  }
+}
+
+
+async function sold(id,status){
+
+  try{
+
+    await api('/api/assets/'+id,{
+      method:'PATCH',
+
+      body:JSON.stringify({
+        status:status==='SOLD'
+          ?'Aktif'
+          :'SOLD'
+      })
+    });
+
+    await render();
+
+  }catch(e){
+
+    alert(e.message);
+
+  }
+}
+
+
+async function saveWA(){
+
+  if(!waname.value||!wa.value){
+
+    wview.textContent='Nama dan nomor wajib diisi.';
+
+    return;
+  }
+
+  try{
+
+    await api('/api/team',{
+      method:'POST',
+
+      body:JSON.stringify({
+        name:waname.value,
+        phone:wa.value
+      })
+    });
+
+    waname.value='';
+    wa.value='';
+
+    await renderTeam();
+
+  }catch(e){
+
+    wview.textContent=e.message;
+
+  }
+}
+
+
+async function toggleTeam(id,active){
+
+  await api('/api/team/'+id,{
+    method:'PATCH',
+
+    body:JSON.stringify({
+      active
+    })
+  });
+
+  await renderTeam();
+
+}
+
+
+async function deleteTeam(id){
+
+  if(confirm('Hapus nomor tim ini?')){
+
+    await api('/api/team/'+id,{
+      method:'DELETE'
+    });
+
+    await renderTeam();
+
+  }
+
+}
+
+
+async function renderTeam(){
+
+  try{
+
+    let t=await api('/api/team');
+
+    wview.innerHTML=t.length
+
+      ?t.map(x=>`
+
+        <div class="asset">
+
+          <div>
+
+            <b>${esc(x.name)}</b>
+
+            <div class="muted">
+              ${esc(x.phone)}
+              •
+              ${x.active?'Aktif':'Nonaktif'}
+            </div>
+
+          </div>
+
+          <div class="actions">
+
+            <button
+              class="btn"
+              onclick="toggleTeam(
+                '${x.id}',
+                ${x.active?0:1}
+              )">
+
+              ${x.active?'Nonaktifkan':'Aktifkan'}
+
+            </button>
+
+            <button
+              class="btn danger"
+              onclick="deleteTeam('${x.id}')">
+
+              Hapus
+
+            </button>
+
+          </div>
+
+        </div>
+
+      `).join('')
+
+      :'<span class="muted">Belum ada nomor tim.</span>';
+
+  }catch(e){
+
+    wview.textContent=e.message;
+
+  }
+
+}
+
+
+async function render(){
+
+  try{
+
+    await loadAssets();
+
+    count.textContent=assets.length;
+
+    active.textContent=
+      assets.filter(x=>x.status==='Aktif').length;
+
+    sold.textContent=
+      assets.filter(x=>x.status==='SOLD').length;
+
+
+    list.innerHTML=assets.length
+
+      ?assets.map(x=>`
+
+        <div class="asset">
+
+          <div>
+
+            <b>${esc(x.name)}</b>
+
+            <div class="muted">
+
+              ${esc(x.location)}
+              •
+              ${esc(x.area||'-')}
+              •
+              Rp${(+x.price||0).toLocaleString('id-ID')}
+              •
+              ${x.status}
+
+            </div>
+
+          </div>
+
+          <div class="actions">
+
+            <button
+              class="btn"
+              onclick="sold(
+                '${x.id}',
+                '${x.status}'
+              )">
+
+              ${x.status==='SOLD'
+                ?'Aktifkan'
+                :'Tandai SOLD'}
+
+            </button>
+
+            <button
+              class="btn danger"
+              onclick="removeAsset('${x.id}')">
+
+              Hapus
+
+            </button>
+
+          </div>
+
+        </div>
+
+      `).join('')
+
+      :'<p class="muted">Belum ada aset.</p>';
+
+
+    await renderTeam();
+
+  }catch(e){
+
+    if(String(e.message).includes('Unauthorized')){
+
+      document.getElementById('app').style.display='none';
+
+      document.getElementById('login').style.display='grid';
+
+    }else{
+
+      alert(e.message);
+
+    }
+
+  }
+
+}
+
+
+function esc(v){
+
+  return String(v??'').replace(
+    /[&<>"']/g,
+    m=>({
+      '&':'&amp;',
+      '<':'&lt;',
+      '>':'&gt;',
+      '"':'&quot;',
+      "'":'&#39;'
+    }[m])
+  );
+
+}
+
+
+async function logout(){
+
+  await fetch('/api/logout',{
+    method:'POST'
+  });
+
+  location.reload();
+
+}
+
+</script>
+
+</body>
+</html>
